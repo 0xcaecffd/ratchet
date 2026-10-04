@@ -1,0 +1,10 @@
+# LF for the tooling, so a byte-exact copy made on Windows matches one made on Linux
+# (ratchet.py --version is the file's sha256).
+*.py text eol=lf
+tools/*.py text eol=lf
+templates/*.py text eol=lf
+skills/**/*.py text eol=lf
+*.md text
+*.toml text
+*.json text
+*.jsonl text

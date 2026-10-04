@@ -1,0 +1,19 @@
+{
+  "name": "ratchet",
+  "owner": {
+    "name": "Charles Crofford"
+  },
+  "metadata": {
+    "description": "A local marketplace holding the ratchet plugin.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "ratchet",
+      "source": "./",
+      "description": "Task records (work, findings, attempts) and a config-driven model-ladder retry for delegated agent work, with a skill-learning loop.",
+      "version": "0.1.0",
+      "category": "workflow"
+    }
+  ]
+}

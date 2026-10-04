@@ -1,0 +1,24 @@
+# Config for the demo workflow: a nightly release-notes pipeline that turns a CSV export
+# of merged pull requests into a reviewed release-notes page.
+#
+# A two-rung ladder, because the units are small and a third model would cost more than a
+# human glance. Outcome labels are this project's own words for its failures.
+
+[ladder]
+strong = "claude-opus-5"
+cheap = "claude-sonnet-5"
+
+[outcomes]
+# stopped  = the agent returned without finishing
+# rejected = the parent's check failed (row count, schema, or a broken link)
+# blocked  = a command failed for an environment reason the agent could not fix
+climb = ["stopped", "rejected", "blocked"]
+
+[tasks]
+root = "~/demo-pipeline/scratch"
+
+[session]
+env = ["DEMO_RUN_ID", "CI_JOB_ID"]
+
+[findings]
+note = "Row counts, column names, PR numbers and paths only: exported rows and drafted prose stay in `out/` and are cited by path.\n"

@@ -1,0 +1,78 @@
+# ratchet configuration. Copy to the root of your project (or to
+# ~/.config/ratchet/ratchet.toml) and edit. Every key is optional; what is left out
+# keeps the default shown in the comment. `ratchet.py config` prints what is in
+# effect and which file it came from.
+#
+# Lookup order: --config PATH, $RATCHET_CONFIG, ratchet.toml / ratchet.json in the
+# cwd or any parent, then ~/.config/ratchet/ledger.{toml,json}.
+#
+# ratchet.json with the same structure works identically, for Python 3.9/3.10 hosts that
+# would rather not rely on the small built-in TOML reader.
+
+
+# --------------------------------------------------------------------------- ladder
+# The retry ladder: rung label = model id, strongest first. Order is file order. The
+# label is what appears in every record, so keep it short and stable; the model id is
+# what you dispatch. The ladder ends implicitly at `user` — there is no rung for it.
+#
+# Default: the seven rungs below.
+[ladder]
+opus55 = "claude-opus-5-5"
+opus5 = "claude-opus-5"
+opus48 = "claude-opus-4-8"
+opus46 = "claude-opus-4-6"
+sonnet55 = "claude-sonnet-5-5"
+sonnet5 = "claude-sonnet-5"
+sonnet46 = "claude-sonnet-4-6"
+
+# A rung may also encode effort or any other dispatch dimension you measure, as long as
+# the label stays unique:
+#   opus5-high = "claude-opus-5"
+#   opus5-medium = "claude-opus-5"
+
+
+# ------------------------------------------------------------------------- outcomes
+# Which closing outcomes move the failing unit one rung down. Anything not listed here
+# and not one of the three fixed outcomes is refused by `attempt close`.
+#
+# Fixed, always available: `done` (unit finished), `a` (tool call denied: reshape or
+# hand to the user, no model change), `d` (session interruption: resume the same rung).
+#
+# Default: ["b", "b?", "c", "w", "unavailable"]
+#   b           the response was stopped by a safety classifier
+#   b?          the agent returned without finishing, no tool error
+#   c           an environment error the agent could not fix in place
+#   w           the parent's verification rejected the result
+#   unavailable the rung's model id was rejected
+[outcomes]
+climb = ["b", "b?", "c", "w", "unavailable"]
+
+
+# ----------------------------------------------------------------------------- tasks
+# Where `ratchet.py init --repo <name>` creates task dirs:
+#   <root>/<name>/tasks/t<YYYYMMDD>-<n>/
+# Use scratch space outside git. A leading ~ is expanded.
+#
+# Default: "." (so ./<name>/tasks/...)
+[tasks]
+root = "~/agent-tasks"
+
+
+# --------------------------------------------------------------------------- session
+# Environment variables consulted, in order, for the session id written into the task
+# index line. The first one set wins; `--session` overrides both; else `unknown`.
+#
+# Default: ["RATCHET_SESSION"]
+[session]
+env = ["RATCHET_SESSION"]
+
+
+# -------------------------------------------------------------------------- findings
+# The note appended to a new findings.md header: your project's rule for what may be
+# written inline and what must stay in files under out/. This is the one place where a
+# content rule belongs in config; the rest of your content rules go in the adapter skill.
+#
+# Default: "Counts, offsets, ids and paths only: bulky or sensitive content goes in
+#           `out/` and is cited by path."
+[findings]
+note = "Counts, offsets, ids and paths only: bulky or sensitive content goes in `out/` and is cited by path.\n"

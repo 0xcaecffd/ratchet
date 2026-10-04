@@ -1,0 +1,15 @@
+{
+  "name": "ratchet",
+  "description": "Records and a retry ladder for delegated agent work: completed work units, findings written as they are learned, one open and one close line per attempt, and a config-driven model ladder that climbs on a classified failure. Workflow-specific details come from a ratchet.toml and an adapter skill, so it can be enabled in any project.",
+  "version": "0.1.0",
+  "keywords": [
+    "agents",
+    "ladder",
+    "records",
+    "retry",
+    "skills"
+  ],
+  "author": {
+    "name": "Charles Crofford"
+  }
+}

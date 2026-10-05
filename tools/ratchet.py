@@ -151,6 +151,10 @@ class Config:
             raise ValueError("config: ladder must have at least one rung")
         self.rungs = list(self.ladder)      # ordered; dicts keep insertion order on 3.7+
         self.climb = tuple(climb) if climb is not None else tuple(DEFAULT_CLIMB)
+        if "a" in self.climb:
+            # a permission denial is not a model problem: another model meets the same wall
+            raise ValueError("config: outcome 'a' (permission denial) never climbs the ladder; "
+                             "remove it from outcomes.climb")
         self.task_root = task_root or DEFAULT_TASK_ROOT
         self.session_env = tuple(session_env) if session_env else tuple(DEFAULT_SESSION_ENV)
         self.findings_note = (DEFAULT_FINDINGS_NOTE if findings_note is None

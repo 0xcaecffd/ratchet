@@ -182,6 +182,12 @@ class AppendTest(Base):
 
 
 class LadderTest(Base):
+    def test_permission_denials_never_climb(self):
+        with self.assertRaises(ValueError):
+            al.Config(climb=["b", "a"])
+        self.close("u9", "a", rung="opus55")
+        self.assertEqual(self.rung_for("u9"), "reshape-or-user")
+
     def test_fresh_unit_starts_at_the_top_rung(self):
         self.assertEqual(al.DEFAULT_LADDER["opus55"], "claude-opus-5-5")
         self.assertEqual(self.cfg.rungs[0], "opus55")

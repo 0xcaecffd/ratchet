@@ -49,6 +49,12 @@ Which classes climb is the config's `outcomes.climb` (default `b`, `b?`, `c`, `w
 refuses any outcome outside its own set.
 
 Rules:
+**Permission failures never trigger the ladder** (user, 2026-10-05). A denied tool call (class a)
+is a configuration wall, not a model problem: every rung meets the same wall, so climbing only
+spends money (one measured run spent $38 across 12 calls this way). Stop the unit at the rung it
+was on, record the denied tools, and hand to the user, who changes the allowlist or the prompt.
+A headless driver stops the whole stage on class a, not only the unit.
+
 - Only the failing unit climbs. Each new unit starts at rung 1.
 - **The parent's own stopped responses climb too.** When the parent session's response is
   stopped mid-task (class b on writing an answer, a file or code that is not yet a delegated

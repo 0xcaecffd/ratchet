@@ -50,6 +50,11 @@ refuses any outcome outside its own set.
 
 Rules:
 - Only the failing unit climbs. Each new unit starts at rung 1.
+- **The parent's own stopped responses climb too.** When the parent session's response is
+  stopped mid-task (class b on writing an answer, a file or code that is not yet a delegated
+  unit), the parent treats the interrupted work as an implicit unit: it records the stop, then
+  dispatches that work, with a short self-contained prompt, to the next rung instead of only
+  reporting it. Nothing in the harness does this automatically; it is the parent's step.
 - A model never gets a second attempt at the same unit, except to resume after class d.
 - A retry must not reuse the failed shape unchanged (the `shape` in the closing attempt line).
 - Hand to the user when the last rung fails, when class a needs a permission, or when two

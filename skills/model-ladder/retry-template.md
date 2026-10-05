@@ -29,3 +29,17 @@ the standing rules come from the consuming workflow's adapter skill.
   records were not read — fix the prompt, not the model.
 - **An honest stop.** The agent records the class and shape and stops. The parent climbs; the
   agent never re-dispatches itself.
+
+## Keep dispatch prompts short
+
+Measured 2026-10-04/05: most class (b) stops on the parent itself came while it wrote long
+dispatch prompts that narrated sample-analysis work in detail (cord/research
+ledger/events.jsonl, session 41f2bd2a). Short prompts that point at files never stopped.
+
+- Put the detail in files the worker reads: the plan, the runbook skill, the task dir's
+  `findings.md` and `work.jsonl`. The prompt names the task, the unit, the files to read, the
+  scope and the reply format, and nothing more.
+- To continue or retry work an agent already has context for, resume that agent with a short
+  message (SendMessage) instead of writing a fresh prompt that restates everything.
+- If a dispatch is stopped mid-write, check whether an agent started on the truncated prompt
+  and stop it before anything else.
